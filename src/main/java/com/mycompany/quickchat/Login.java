@@ -9,5 +9,39 @@ package com.mycompany.quickchat;
  * @author lab_services_student
  */
 public class Login {
-    
+    public boolean checkUserName(String UserName) {
+        if (UserName.contains("_") && UserName.length() <= 5) {
+            System.out.println("Userame successfully captured");
+            return true;
+        } else {
+            System.out.println("Username is not correctly formatted; please ensure that your username contains an underscore and is no more than 5 characters.");
+            return false;
+        }
+    }
+    public boolean checkPasswordComplexity(String Password) {
+        int UCase = 0;
+        int Digit = 0;
+        int Special = 0;
+        for (char c : Password.toCharArray()) {
+            if (Character.isUpperCase(c)) UCase +=1;
+            if (Character.isDigit(c)) Digit +=1;
+            if (!Character.isLetterOrDigit(c)) Special +=1;
+        }
+        if (UCase > 0 && Digit > 0 && Special > 0) {
+            System.out.println("Password successfully captured");
+            return true;
+        } else {
+            System.out.println("Password is not correctly formatted; please ensure that your password contains at least 8 characters, a capital letter, a number and a special character.");
+            return false;
+        }
+    }
+    public boolean checkCellphoneNumber(String CellNum) {
+        if (CellNum.startsWith("+27") && CellNum.length() <= 13) {
+            System.out.println("Cellphone number successfully captured");
+            return true;
+        } else {
+            System.out.println("Password incorrectly formatted or does not contain international code");
+            return false;
+        }
+    }
 }
