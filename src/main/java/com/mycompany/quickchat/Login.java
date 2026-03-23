@@ -11,7 +11,7 @@ package com.mycompany.quickchat;
 public class Login {
     public boolean checkUserName(String UserName) {
         if (UserName.contains("_") && UserName.length() <= 5) {
-            System.out.println("Userame successfully captured");
+            System.out.println("Username successfully captured");
             return true;
         } else {
             System.out.println("Username is not correctly formatted; please ensure that your username contains an underscore and is no more than 5 characters.");
@@ -42,6 +42,16 @@ public class Login {
         } else {
             System.out.println("Password incorrectly formatted or does not contain international code");
             return false;
+        }
+    }
+    public User registerUser(String Username, String Password, String CellNum) {
+        if (checkUserName(Username) && checkPasswordComplexity(Password) && checkCellphoneNumber(CellNum)) {
+            User user = new User(Username, Password, CellNum);
+            System.out.println("User registered successfully");
+            return user;
+        } else {
+            System.out.println("User not registered");
+            return null;
         }
     }
 }

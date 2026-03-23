@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.quickchat;
+import java.util.Scanner;
 
 /**
  *
@@ -14,9 +15,12 @@ public class User {
     String UserName;
     String Password;
     String CellphoneNumber;
-    public void User (String f, String l, String u, String p, String c) {
-        this.FirstName = f;
-        this.LastName = l;
+    public User(String u, String p, String c) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter your name:");
+        this.FirstName = scanner.nextLine();
+        System.out.println("Please enter last name:");
+        this.LastName = scanner.nextLine();
         this.UserName = u;
         this.Password = p;
         this.CellphoneNumber = c;
