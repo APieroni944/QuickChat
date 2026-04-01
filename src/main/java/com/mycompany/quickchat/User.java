@@ -15,14 +15,11 @@ public class User {
     String UserName;
     String Password;
     String CellphoneNumber;
-    public User(String u, String p, String c) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter your name:");
-        this.FirstName = scanner.nextLine();
-        System.out.println("Please enter last name:");
-        this.LastName = scanner.nextLine();
-        this.UserName = u;
-        this.Password = p;
-        this.CellphoneNumber = c;
+    public User(String firstName, String lastName, String userName, String password, String cellphoneNumber) {
+        this.FirstName = firstName;
+        this.LastName = lastName;
+        this.UserName = userName;
+        this.Password = password;
+        this.CellphoneNumber = cellphoneNumber;
     }
 }

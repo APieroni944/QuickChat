@@ -4,6 +4,8 @@
  */
 package com.mycompany.quickchat;
 
+import java.util.Scanner;
+
 /**
  *
  * @author lab_services_student
@@ -40,19 +42,35 @@ public class Login {
             System.out.println("Cellphone number successfully captured");
             return true;
         } else {
-            System.out.println("Password incorrectly formatted or does not contain international code");
+            System.out.println("Cellphone number incorrectly formatted or does not contain international code");
             return false;
         }
     }
     public User registerUser(String Username, String Password, String CellNum) {
+
         if (checkUserName(Username) && checkPasswordComplexity(Password) && checkCellphoneNumber(CellNum)) {
-            User user = new User(Username, Password, CellNum);
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Please enter your name:");
+            String FirstName = scanner.nextLine();
+            System.out.println("Please enter last name:");
+            String LastName = scanner.nextLine();
+            User user = new User(FirstName, LastName, Username, Password, CellNum);
             System.out.println("User registered successfully");
             return user;
         } else {
             System.out.println("User not registered");
             return null;
         }
+    }
+    public User registerUserNoChecks(String Username, String Password, String CellNum) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter your name:");
+        String FirstName = scanner.nextLine();
+        System.out.println("Please enter last name:");
+        String LastName = scanner.nextLine();
+        User user = new User(FirstName, LastName, Username, Password, CellNum);
+        System.out.println("User registered successfully");
+        return user;
     }
     public User loginUser(User[] Users, String Username, String Password) {
         for (User user : Users) {
