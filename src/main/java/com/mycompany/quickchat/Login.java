@@ -49,14 +49,7 @@ public class Login {
     public User registerUser(String Username, String Password, String CellNum) {
 
         if (checkUserName(Username) && checkPasswordComplexity(Password) && checkCellphoneNumber(CellNum)) {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Please enter your name:");
-            String FirstName = scanner.nextLine();
-            System.out.println("Please enter last name:");
-            String LastName = scanner.nextLine();
-            User user = new User(FirstName, LastName, Username, Password, CellNum);
-            System.out.println("User registered successfully");
-            return user;
+            return registerUserNoChecks(Username, Password, CellNum);
         } else {
             System.out.println("User not registered");
             return null;
@@ -74,7 +67,7 @@ public class Login {
     }
     public User loginUser(User[] Users, String Username, String Password) {
         for (User user : Users) {
-            if (Username.equals(user.UserName) && Password.equals(user.Password)) {
+            if (Username.equals(user.UserName) && user.authenticatePassword(Password)) {
                 System.out.println("Welcome "+ user.FirstName + ", " + user.LastName + ". It is great to see you again");
                 return user;
             }
