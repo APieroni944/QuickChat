@@ -4,6 +4,7 @@
  */
 package com.mycompany.quickchat;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -25,11 +26,11 @@ public class Login {
         int Digit = 0;
         int Special = 0;
         for (char c : Password.toCharArray()) {
-            if (Character.isUpperCase(c)) UCase +=1;
-            if (Character.isDigit(c)) Digit +=1;
-            if (!Character.isLetterOrDigit(c)) Special +=1;
+            if (Character.isUpperCase(c)) UCase +=1;            //count upper case
+            if (Character.isDigit(c)) Digit +=1;                //count digit
+            if (!Character.isLetterOrDigit(c)) Special +=1;     //count special
         }
-        if (UCase > 0 && Digit > 0 && Special > 0) {
+        if (UCase > 0 && Digit > 0 && Special > 0) {            //check that all counts exceed 0
             System.out.println("Password successfully captured");
             return true;
         } else {
@@ -48,8 +49,8 @@ public class Login {
     }
     public User registerUser(String Username, String Password, String CellNum) {
 
-        if (checkUserName(Username) && checkPasswordComplexity(Password) && checkCellphoneNumber(CellNum)) {
-            return registerUserNoChecks(Username, Password, CellNum);
+        if (checkUserName(Username) && checkPasswordComplexity(Password) && checkCellphoneNumber(CellNum)) {        //call relevant check methods
+            return registerUserNoChecks(Username, Password, CellNum);       //call necessary process from other function to reduce redundancy
         } else {
             System.out.println("User not registered");
             return null;
@@ -63,16 +64,16 @@ public class Login {
         String LastName = scanner.nextLine();
         User user = new User(FirstName, LastName, Username, Password, CellNum);
         System.out.println("User registered successfully");
-        return user;
+        return user;                //return user variable
     }
-    public User loginUser(User[] Users, String Username, String Password) {
-        for (User user : Users) {
-            if (Username.equals(user.UserName) && user.authenticatePassword(Password)) {
+    public User loginUser(List<User> Users, String Username, String Password) {
+        for (User user : Users) {           //iterate through user array
+            if (Username.equals(user.UserName) && user.authenticatePassword(Password)) {        //check username and password
                 System.out.println("Welcome "+ user.FirstName + ", " + user.LastName + ". It is great to see you again");
-                return user;
+                return user;        //return matching user from array
             }
         }
         System.out.println("Username or password incorrect. Please try again");
-        return null;
+        return null;        //return null if user not found
     }
 }

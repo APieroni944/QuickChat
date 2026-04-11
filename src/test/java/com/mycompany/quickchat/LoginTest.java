@@ -8,13 +8,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class LoginTest {
 
     private Login login;
-    private User[] users;
+    private List<User> users;
 
     @BeforeEach
     void initlogin() {
         login = new Login();
-        users = new User[1];
-        users[0] = new User("Kyle", "Johnson", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
+        users.add(new User("Kyle", "Johnson", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
     }
 
     @Test
@@ -38,6 +37,6 @@ class LoginTest {
     @Test
     void loginUser() {
         assertNull(login.loginUser(users, "Jon_2", "ABC123#d"));
-        assertEquals(users[0], login.loginUser(users, "kyl_1", "Ch&&sec@ke99!"));
+        assertEquals(users.get(0), login.loginUser(users, "kyl_1", "Ch&&sec@ke99!"));
     }
 }

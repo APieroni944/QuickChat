@@ -10,29 +10,29 @@ import java.util.*;
  */
 public class QuickChat {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Login login = new Login();
-        User user = null;
+        Scanner scanner = new Scanner(System.in);       //Create instance of scanner
+        Login login = new Login();                      //create instance of login
+        User user = null;                               //initialise current user as null
         String UName;
         String pwd;
         String cellnum;
-        ArrayList<User> userList = new ArrayList<>();
+        ArrayList<User> userList = new ArrayList<>();   //define arrayList of type user
         System.out.println("Welcome to QuickChat");
         while (user == null) {
             do {
                 System.out.println("Please enter your username:");
                 UName = scanner.nextLine();
-            } while (!login.checkUserName(UName));
+            } while (!login.checkUserName(UName));     //repeat until valid username
             do {
                 System.out.println("Please enter your pasword:");
                 pwd = scanner.nextLine();
-            } while (!login.checkPasswordComplexity(pwd));
+            } while (!login.checkPasswordComplexity(pwd));      //repeat until valid password
             do {
                 System.out.println("Please enter your cellphone number:");
                 cellnum = scanner.nextLine();
-            } while (!login.checkCellphoneNumber(cellnum));
-            user = login.registerUserNoChecks(UName, pwd, cellnum);
+            } while (!login.checkCellphoneNumber(cellnum));     //repeat until valid cellphone number
+            user = login.registerUserNoChecks(UName, pwd, cellnum);     //register user bypassing checks, as they have already been completed
         }
-        userList.add(user);
+        userList.add(user);         //add current user to userList array
     }
 }
