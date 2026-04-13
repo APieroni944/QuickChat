@@ -40,7 +40,8 @@ public class Login {
         }
     }
     public boolean checkCellphoneNumber(String CellNum) {
-        if (CellNum.startsWith("+27") && CellNum.length() == 12) {
+        //if (CellNum.startsWith("+27") && CellNum.length() == 12) {    //standard check
+        if (CellNum.matches("^\\+27\\d{9}$")){                          //chech using regex
             System.out.println("Cellphone number successfully captured");
             return true;
         } else {
