@@ -17,6 +17,7 @@ public class QuickChat {
         String pwd;
         String cellnum;
         ArrayList<User> userList = new ArrayList<>();   //define arrayList of type user
+        userList.add(new User("Kyle", "Johnson","kyl_1", "ABC123#d", "+27123456789"));      //hardcoded entry to userList for testing purposes
         System.out.println("Welcome to QuickChat");
         while (user == null) {
             do {
@@ -24,15 +25,24 @@ public class QuickChat {
                 UName = scanner.nextLine();
             } while (!login.checkUserName(UName));     //repeat until valid username
             do {
-                System.out.println("Please enter your pasword:");
+                System.out.println("Please enter your password:");
                 pwd = scanner.nextLine();
-            } while (!login.checkPasswordComplexity(pwd));      //repeat until valid password
-            do {
-                System.out.println("Please enter your cellphone number:");
-                cellnum = scanner.nextLine();
-            } while (!login.checkCellphoneNumber(cellnum));     //repeat until valid cellphone number
-            user = login.registerUserNoChecks(UName, pwd, cellnum);     //register user bypassing checks, as they have already been completed
+            } while (!login.checkPasswordComplexity(pwd)); //repeat until valid password
+            try {
+                user = login.loginUser(userList, UName, pwd);       //check for existing user
+                if (user == null) {                                 //register new user if user not found
+                    System.out.println("Registering new user");
+                    do {
+                        System.out.println("Please enter your cellphone number:");
+                        cellnum = scanner.nextLine();
+                    } while (!login.checkCellphoneNumber(cellnum));     //repeat until valid cellphone number
+                    user = login.registerUserNoChecks(UName, pwd, cellnum);     //register user bypassing checks, as they have already been completed
+                    userList.add(user);         //add current user to userList array
+                }
+            } catch(IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
         }
-        userList.add(user);         //add current user to userList array
+        System.out.println("current user: " + user.getUserName());      //print username of current user
     }
 }

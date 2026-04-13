@@ -12,6 +12,7 @@ import java.util.Scanner;
  * @author lab_services_student
  */
 public class Login {
+    
     public boolean checkUserName(String UserName) {
         if (UserName.contains("_") && UserName.length() <= 5) {
             System.out.println("Username successfully captured");
@@ -68,12 +69,17 @@ public class Login {
     }
     public User loginUser(List<User> Users, String Username, String Password) {
         for (User user : Users) {           //iterate through user array
-            if (Username.equals(user.UserName) && user.authenticatePassword(Password)) {        //check username and password
-                System.out.println("Welcome "+ user.FirstName + ", " + user.LastName + ". It is great to see you again");
-                return user;        //return matching user from array
+            if (Username.equals(user.UserName)) {        //check username and password
+                if (user.authenticatePassword(Password)){
+                    System.out.println("Welcome "+ user.FirstName + ", " + user.LastName + ". It is great to see you again");
+                    return user;        //return matching user from array
+                } else {
+                    //System.out.println("Password incorrect. Please try again");
+                    throw new IllegalArgumentException("Password Incorrect. Please try again");
+                }
             }
         }
-        System.out.println("Username or password incorrect. Please try again");
+        System.out.println("User not found");
         return null;        //return null if user not found
     }
 }
