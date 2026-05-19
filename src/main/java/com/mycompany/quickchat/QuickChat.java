@@ -98,18 +98,33 @@ public class QuickChat {
             String option = scanner.nextLine();
             switch (option) {
                 case "2": {
-                    System.out.println("Coming soon")
+                    System.out.println("Coming soon");
+                    break;
                 }
                 case "3": {
                     //Quit program
                     try {
-                        SaveFile(SavedMessages, "SavesMessages.json")
+                        SaveFile(SavedMessages, "SavedMessages.json")
                     } catch (Exception e) {
                         System.out.println("Failed to save past messages: " + e.getMessage())
                     }
                     System.exit(0);
                 }
-                default: {}
+                default: {
+                    System.out.println("How many messages would you like to send?");
+                    int numMessages = null;
+                    while numMessages = null {
+                        try {
+                            String option = scanner.nextLine();
+                            numMessages = Integer.paarseint(option);
+                        } catch (Exception e) {
+                            System,out.println("Please enter a valid integer");
+                        }
+                    }
+                    for (int i = 0; i < numMessages; i++) {
+
+                    }
+                }
             }
         }
     }
