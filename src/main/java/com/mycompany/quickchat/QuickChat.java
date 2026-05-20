@@ -99,7 +99,7 @@ public class QuickChat {
                             text = scanner.nextLine();
                         } while (!Message.checkMessageLength(text));
                         Message message = new Message(numMessages, cellnum, text);
-                        switch (message.SentMessage()) {
+                        switch (message.SentMessage(i)) {
                             case 0: {
                                 break;
                             }

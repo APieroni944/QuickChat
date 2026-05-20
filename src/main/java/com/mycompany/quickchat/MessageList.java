@@ -53,4 +53,12 @@ public class MessageList {
         }
         return list[index];
     }
+
+    public static void printMessages() {
+        for (int i = 0; i < list.length; i++){
+            //System.out.println("-------  Message " + i + "  -------");
+            list[i].printMessageInfo(i);
+            //System.out.println("-----------------------------------");
+        }
+    }
 }
