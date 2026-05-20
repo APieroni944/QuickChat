@@ -12,7 +12,6 @@ import java.util.*;
 public class QuickChat {
     static MessageList sent = new MessageList();
     static MessageList saved = new MessageList();
-    static Message msg = new Message(0, "", "");
     static Scanner scanner = new Scanner(System.in); // Create instance of scanner
 
     public static void main(String[] args) {
@@ -58,7 +57,7 @@ public class QuickChat {
     }
 
     public static void Part2(User user) {
-        sent.populate("sent.json");
+        //sent.populate("sent.json");
         saved.populate("saved.json");
 
         System.out.println("Welcome to QuickChat \n");
@@ -74,7 +73,7 @@ public class QuickChat {
                 case "3": {
                     // Quit program
                     saved.save("saved.json");
-                    sent.save("sent.json");
+                    //sent.save("sent.json");
                     System.exit(0);
                 }
                 default: {
@@ -93,9 +92,12 @@ public class QuickChat {
                         do {
                             System.out.println("Please enter the recipient phone number");
                             cellnum = scanner.nextLine();
-                        } while (!msg.checkRecipientCell(cellnum));
-                        System.out.println("Please enter your message");
-                        String text = scanner.nextLine();
+                        } while (!Message.checkRecipientCell(cellnum));
+                        String text;
+                        do {
+                            System.out.println("Please enter your message (under 250 characters");
+                            text = scanner.nextLine();
+                        } while (!Message.checkMessageLength(text))
                         Message message = new Message(numMessages, cellnum, text);
                         switch (message.SentMessage()) {
                             case 0: {

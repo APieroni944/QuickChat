@@ -32,7 +32,7 @@ public class Message {
         // FIXED: Added the return keyword
         return cell.matches("^\\+27\\d{9}$");
     }
-    public static string checkMessageLength(String text) {
+    public static boolean checkMessageLength(String text) {
         return text.length() <= 250;
     }
 

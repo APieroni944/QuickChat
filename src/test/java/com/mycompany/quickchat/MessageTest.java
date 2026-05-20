@@ -1,25 +1,61 @@
 package com.mycompany.quickchat;
 
-
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-class MessageTest {
+public class MessageTest {
 
-    private MessageList messages;
-    private List<User> users;
+    private final InputStream originalSystemIn = System.in;
 
-    @BeforeAll
-    void initlogin() {
-        users.add(new User("Kyle", "Johnson", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
-        messages.Append(new Message(1, "+27718693002", "Hi Mike, can you join us for dinner tonight?"));
-        messages.Append(new Message(2, "08575975889", "Hi kegan, did you decieve the payment?"));
-        messages.Append(new Message(3, "+27123456789", "Over 250 character message: qwertyuioplkjhgfdsazxcvbnm,lkjhgfdsaqwertyuiop poiuytrewqasdfghjkl mnbvcxzasdfghjkoiuytrewasdfghjklmnb qwertyui. nbvcxasdfghjk98765432sdfghj kjhgfdswertyuikjhgf zxcvbnm.kjhgfdwertyu. wertyuioplkjhgfdszxcvbnmlkjhgfdsa oiuytrewqasdfghjk wertyuiokjhgfdsazxcvbn lkjhgfdsaqwertyuiolkjhg .mnbvcxsdrtyh"));
+    @AfterEach
+    public void tearDown() {
+        System.setIn(originalSystemIn);
     }
 
     @Test
-    MessageLength() {
-        assertTrue(Message.checkMessageLength(messages[0].list.message));
-        assertFalse(Message.checkMessageLength(messages[2].list.message));
+    public void testFirstMessageData() {
+        Message msg1 = new Message(1, "+27718693002", "Hi Mike, can you join us for dinner tonight?");
+        
+        assertTrue(Message.checkRecipientCell(msg1.RecipientCell));
+        
+        assertEquals(1, msg1.returnTotalMessages());
+
+        String prefix = msg1.ID.substring(0, 2);
+        String expectedHash = prefix + ":1:HITONIGHT?";
+        assertEquals(expectedHash, msg1.Hash);
     }
+
+    @Test
+    public void testSecondMessageData() {
+        Message msg2 = new Message(2, "08575975889", "Hi kegan, did you decieve the payment?");
+        
+        assertFalse(Message.checkRecipientCell(msg2.RecipientCell));
+        
+        assertEquals(2, msg2.returnTotalMessages());
+
+        String prefix = msg2.ID.substring(0, 2);
+        String expectedHash = prefix + ":2:HIPAYMENT?";
+        assertEquals(expectedHash, msg2.Hash);
+    }
+
+    @Test
+    public void testFirstMessageInteractiveSend() {
+        provideInput("1\n");
+        Message msg1 = new Message(1, "+27718693002", "Hi Mike, can you join us for dinner tonight?");
+        
+        int result = msg1.SentMessage();
+        assertEquals(1, result, "Selecting option 1 should return status code 1 (Sent).");
+    }
+
+    /**
+     * Helper method to redirect System.in for interactive Scanner testing
+     */
+    private void provideInput(String data) {
+        ByteArrayInputStream testIn = new ByteArrayInputStream(data.getBytes());
+        System.setIn(testIn);
+    }
+}
