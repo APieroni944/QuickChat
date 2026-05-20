@@ -1,8 +1,10 @@
 package com.mycompany.quickchat;
 
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import java.util.ArrayList; 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class LoginTest {
@@ -13,7 +15,8 @@ class LoginTest {
     @BeforeEach
     void initlogin() {
         login = new Login();
-        users.add(new User("Kyle", "Johnson", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
+        users = new ArrayList<>();
+        users.add(new User("Kyle", "Johnson", "kyl_1", "Ch&&sec@ke99!", "+27838968976"));
     }
 
     @Test

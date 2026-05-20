@@ -97,7 +97,7 @@ public class QuickChat {
                         do {
                             System.out.println("Please enter your message (under 250 characters");
                             text = scanner.nextLine();
-                        } while (!Message.checkMessageLength(text))
+                        } while (!Message.checkMessageLength(text));
                         Message message = new Message(numMessages, cellnum, text);
                         switch (message.SentMessage()) {
                             case 0: {
