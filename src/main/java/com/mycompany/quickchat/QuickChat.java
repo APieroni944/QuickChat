@@ -95,7 +95,7 @@ public class QuickChat {
                         } while (!Message.checkRecipientCell(cellnum));
                         String text;
                         do {
-                            System.out.println("Please enter your message (under 250 characters");
+                            System.out.println("Please enter your message (under 250 characters)");
                             text = scanner.nextLine();
                         } while (!Message.checkMessageLength(text));
                         Message message = new Message(numMessages, cellnum, text);

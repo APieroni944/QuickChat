@@ -12,7 +12,7 @@ public class MessageList {
     private int lastIndex = -1; 
     public void Append(Message message) {
         if (lastIndex + 1 >= list.length) {
-            Message[] newList = new Message[list.length + 10];
+            Message[] newList = new Message[list.length + 1];
             System.arraycopy(list, 0, newList, 0, list.length);
             list = newList;
         }
@@ -54,7 +54,7 @@ public class MessageList {
         return list[index];
     }
 
-    public static void printMessages() {
+    public void printMessages() {
         for (int i = 0; i < list.length; i++){
             //System.out.println("-------  Message " + i + "  -------");
             list[i].printMessageInfo(i);

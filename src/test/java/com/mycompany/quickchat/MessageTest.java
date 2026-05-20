@@ -47,7 +47,7 @@ public class MessageTest {
         provideInput("1\n");
         Message msg1 = new Message(1, "+27718693002", "Hi Mike, can you join us for dinner tonight?");
         
-        int result = msg1.SentMessage();
+        int result = msg1.SentMessage(0);
         assertEquals(1, result, "Selecting option 1 should return status code 1 (Sent).");
     }
 
