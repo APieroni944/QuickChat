@@ -58,14 +58,14 @@ public class QuickChat {
 
     public static void Part2(User user) {
         //sent.populate("sent.json");
-        saved.populate("saved.json");
+        saved.populate("saved.json");             //Populate saved messages array from .json file
 
         System.out.println("Welcome to QuickChat \n");
-        while(true) {
+        while(true) {                             //while(true) so the program keeps repeating untill terminated
             System.out.println("Select an option: \n  1: Send messages \n  2: Show recently sent messages \n  3: Quit \n(default = 1)");
 
             String option = scanner.nextLine();
-            switch (option) {
+            switch (option) {                      //switch case to decide between options
                 case "2": {
                     System.out.println("Coming soon");
                     break;
@@ -76,12 +76,12 @@ public class QuickChat {
                     //sent.save("sent.json");
                     System.exit(0);
                 }
-                default: {
+                default: {                          //catch all case to send message to avoid errors
                     System.out.println("How many messages would you like to send?");
-                    int numMessages = 0;
+                    int numMessages = 0;            //Initialise numMessages and cellnum outside of try catch so they stay in scope
                     String cellnum = "";
                     do {
-                        try {
+                        try {                       //try catch in case the user enters a !digit
                             String input = scanner.nextLine();
                             numMessages = Integer.parseInt(input);
                         } catch (Exception e) {
@@ -90,25 +90,25 @@ public class QuickChat {
                     } while (numMessages == 0);
                     for (int i = 0; i < numMessages; i++) {
                         do {
-                            System.out.println("Please enter the recipient phone number");
+                            System.out.println("Please enter the recipient phone number");    //prompt user for cellphone number
                             cellnum = scanner.nextLine();
-                        } while (!Message.checkRecipientCell(cellnum));
+                        } while (!Message.checkRecipientCell(cellnum));       //repeat until cellnum is valid
                         String text;
                         do {
                             System.out.println("Please enter your message (under 250 characters)");
                             text = scanner.nextLine();
-                        } while (!Message.checkMessageLength(text));
-                        Message message = new Message(numMessages, cellnum, text);
-                        switch (message.SentMessage(i)) {
+                        } while (!Message.checkMessageLength(text));          //repeat until message under 250 characters
+                        Message message = new Message(numMessages, cellnum, text);      //declare message
+                        switch (message.SentMessage(i)) {     //call SentMessage and use return value for switch case
                             case 0: {
-                                break;
+                                break;                    //disregard message (do nothing)
                             }
                             case 1: {
-                                sent.Append(message);
+                                sent.Append(message);     //Append to sent array
                                 break;
                             }
                             case 2: {
-                                saved.Append(message);
+                                saved.Append(message);    //Append to saved array
                                 break;
                             }
                         }

@@ -60,7 +60,7 @@ public class Message {
             }
             default: {
                 System.out.println("Message successfully sent");
-                this.printMessageInfo(i);
+                this.printMessageInfo(i);                           //Output message information
                 return 1;
             }
         }
@@ -77,10 +77,10 @@ public class Message {
     */
 
     public int returnTotalMessages() {
-        return this.NumSent;
+        return this.NumSent;                      //return number of messages sent
     }
 
-    public void printMessageInfo(int i) {
+    public void printMessageInfo(int i) {                                       //Output all message information
         System.out.println("\n-------  Message " + i + "  -------");
         System.out.println("Message ID:   " + this.ID + "\nMessage Hash:    " + this.Hash + "\nRecipient:    " + this.RecipientCell + "\nMessage:    " + this.Message);
         System.out.println("----------------------------------- \n");
