@@ -28,9 +28,12 @@ public class Message {
         return this.ID.length() <= 10;
     }
 
-    public boolean checkRecipientCell(String cell) {
+    public static boolean checkRecipientCell(String cell) {
         // FIXED: Added the return keyword
         return cell.matches("^\\+27\\d{9}$");
+    }
+    public static string checkMessageLength(String text) {
+        return text.length() <= 250;
     }
 
     private String createMessageHash() {

@@ -10,7 +10,6 @@ import java.util.*;
  * @author lab_services_student
  */
 public class QuickChat {
-    // FIXED: Added 'static' to all global instances so static methods can access them
     static MessageList sent = new MessageList();
     static MessageList saved = new MessageList();
     static Message msg = new Message(0, "", "");
@@ -85,7 +84,6 @@ public class QuickChat {
                     do {
                         try {
                             String input = scanner.nextLine();
-                            // FIXED: Changed 'parseint' to camelCase 'parseInt'
                             numMessages = Integer.parseInt(input);
                         } catch (Exception e) {
                             System.out.println("Please enter a valid integer");
