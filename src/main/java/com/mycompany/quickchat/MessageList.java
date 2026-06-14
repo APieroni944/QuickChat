@@ -8,11 +8,11 @@ import java.nio.file.Paths;
 public class MessageList {
     private final Gson gson = new Gson();     //create instance of gson
 
-    private Message[] list = new Message[0];    //atribute list of type Message array
-    private int lastIndex = -1;                 //Atribute lastIndex of type int
+    Message[] list = new Message[0];    //atribute list of type Message array
+    int lastIndex = -1;                 //Atribute lastIndex of type int
     public void Append(Message message) {
         if (lastIndex + 1 >= list.length) {     //Check for space in the array
-            Message[] newList = new Message[list.length + 1];
+            Message[] newList = new Message[list.length + 10];
             System.arraycopy(list, 0, newList, 0, list.length); 
             list = newList;                     //Create new array with one extra element and assign it to list after copying over prior data
         }
@@ -27,14 +27,19 @@ public class MessageList {
             list = gson.fromJson(jsonString, Message[].class);        //convert from json string to type Message[]
 
             if (list == null) {
-                list = new Message[0];                                //if empty list initialise as one null element
+                list = new Message[10];                                //if empty list initialise as 10 null elements
             }
 
-            lastIndex = list.length - 1;                //Set lastIndex to the last populated element of the array
+            lastIndex = -1;                //Set lastIndex to the last populated element of the array
+            while (list[lastIndex + 1] != null) {
+                lastIndex += 1;
+            }
 
         } catch (IOException e) {
             System.err.println("Failed to read file in path " + path + ": " + e.getMessage()); //print error message
             lastIndex = -1;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            lastIndex = list.length - 1;
         }
     }
 
@@ -60,5 +65,12 @@ public class MessageList {
             list[i].printMessageInfo(i);                                  //iterate through list and print messages
             //System.out.println("-----------------------------------");
         }
+    }
+    public void delete(int index) {
+        for (int i = index; i<lastIndex; i++) {
+            list[i] = list[i + 1];
+        }
+        list[lastIndex] = null;
+        lastIndex -= 1;
     }
 }
