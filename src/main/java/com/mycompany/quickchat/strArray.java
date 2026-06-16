@@ -5,9 +5,9 @@ public class strArray {
     int lastIndex = -1;
     public void append(String s) {
         if (lastIndex + 1 >= list.length) {     //Check for space in the array
-            String[] newList = new String[list.length + 10];
+            String[] newList = new String[list.length + 1];
             System.arraycopy(list, 0, newList, 0, list.length);
-            list = newList;                     //Create new array with ten extra elements and assign it to list after copying over prior data
+            list = newList;                     //Create new array with one extra element and assign it to list after copying over prior data
         }
         lastIndex += 1;                         //increment lastIndex
         list[lastIndex] = s;              //Assign Message to array

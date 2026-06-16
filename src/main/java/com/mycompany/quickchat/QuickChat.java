@@ -96,13 +96,19 @@ public class QuickChat {
                     } while (numMessages == -1);
                     for (int i = 0; i < numMessages; i++) {
                         do {
-                            System.out.println("Please enter the recipient phone number");    //prompt user for cellphone number
+                            System.out.println("Please enter the recipient phone number (including country code)");    //prompt user for cellphone number
                             cellnum = scanner.nextLine();
+                            if (!Message.checkRecipientCell(cellnum)) {
+                              System.out.println("cellphone number not formatted correctly. Please try again");
+                            }
                         } while (!Message.checkRecipientCell(cellnum));       //repeat until cellnum is valid
                         String text;
                         do {
                             System.out.println("Please enter your message (under 250 characters)");
                             text = scanner.nextLine();
+                            if (!Message.checkMessageLength(text)) {
+                              System.out.println("Message exceeds 250 characters. Please try again");
+                            }
                         } while (!Message.checkMessageLength(text));          //repeat until message under 250 characters
                         Message message = new Message(numMessages, cellnum, text);      //declare message
                         switch (message.SentMessage(i)) {     //call SentMessage and use return value for switch case
@@ -117,13 +123,16 @@ public class QuickChat {
                                 saved.Append(message);    //Append to saved array
                                 break;
                             }
+                            default: {
+                                break;
+                            }
                         }
                     }
                 }
             }
         }
     }
-    public static void Part3(User user) {
+    public static void Part3(User user) {               //Main section for part 3
         System.out.println("Select an option: " +
                 "\n  1: Display sender and recipient of all saved messages " +
                 "\n  2: Display the longest stored message " +
@@ -131,27 +140,34 @@ public class QuickChat {
                 "\n  4: Search stored messages by recipient " +
                 "\n  5: Delete message by message hash " +
                 "\n  6: List details of all stored messages " +
-                "\n (default = NONE)");
+                "\n(default = NONE)");                    //Prompt split across multiple lines for readability
 
         String option = scanner.nextLine();
         switch (option) {
             case "1": {
                 //Display sender and recipient of all saved messages
+                /*
                 for (Message msg : saved.list) {
                     System.out.println("\n Sender: " + user.CellphoneNumber +
                             " \n Recipient: " + msg.RecipientCell +
-                            "\n");
+                            " \n Message Hash: " + msg.Hash);                        //Code split acrossmultiple lines for readability 
                 }
+                 */
+                System.out.println(displayRecipient(user));
                 break;
             }
             case "2": {
                 //Display the longest stored message
+                /*
                 Message longmsg = saved.list[0];
-                for (Message msg : saved.list) {
+                for (Message msg : saved.list) {                   //Linear scan for largest element at O(n) time complexity 
                     if (msg.Message.length() > longmsg.Message.length()) {
                         longmsg = msg;
                     }
                 }
+                longmsg.printMessageInfo(0);
+                 */
+                Message longmsg = longMessage();
                 longmsg.printMessageInfo(0);
                 break;
             }
@@ -172,10 +188,10 @@ public class QuickChat {
                 System.out.println("Enter the message recipient you wish to search for");
                 String id = scanner.nextLine();
                 try {
-                    Message msg = SearchRecipient(id);
-                    msg.printMessageInfo(0);
+                    MessageList msg = SearchRecipient(id);
+                    msg.printMessages();
                 } catch (Exception e) {
-                    System.out.println(e);
+                    System.out.println("Failed to search recipient" + e);
                 }
                 break;
             }
@@ -186,7 +202,7 @@ public class QuickChat {
                 try {
                     deleteHash(hash);
                 } catch (Exception e) {
-                    System.out.println(e);
+                    System.out.println("Failed to delete message: " + e);
                 }
                 break;
             }
@@ -207,45 +223,50 @@ public class QuickChat {
         }
     }
     public static Message SearchID(String id) {
-        for (Message msg : sent.list) {
-            if(msg.ID == id) {
+        for (Message msg : sent.list) {       //linear search for message ID in sent, saved and disregarded MessageLists
+            if(Objects.equals(msg.ID, id)) {
                 return msg;
             }
         }
         for (Message msg : saved.list) {
-            if(msg.ID == id) {
+            if(Objects.equals(msg.ID, id)) {
                 return msg;
             }
         }
         for (Message msg : disregarded.list) {
-            if(msg.ID == id) {
+            if(Objects.equals(msg.ID, id)) {
                 return msg;
             }
         }
-        throw new IllegalArgumentException("Message ID does not exist");
+        throw new IllegalArgumentException("Message ID does not exist");  //Throw exception if message is not found 
     }
-    public static Message SearchRecipient(String recipient) {
-        for (Message msg : sent.list) {
+    public static MessageList SearchRecipient(String recipient) {
+        MessageList messages = new MessageList();
+        for (Message msg : sent.list) {     //linear search for Recipient in sent, saved and disregerded MessageLists 
             if(Objects.equals(msg.RecipientCell, recipient)) {
-                return msg;
+                messages.Append(msg);
             }
         }
         for (Message msg : saved.list) {
-            if(Objects.equals(msg.RecipientCell, recipient)) {
-                return msg;
+            if(msg != null && Objects.equals(msg.RecipientCell, recipient)) {
+                messages.Append(msg);
             }
         }
         for (Message msg : disregarded.list) {
-            if(Objects.equals(msg.RecipientCell, recipient)) {
-                return msg;
+            if(msg != null && Objects.equals(msg.RecipientCell, recipient)) {
+                messages.Append(msg);
             }
         }
-        throw new IllegalArgumentException("Message ID does not exist");
+        if (messages.list.length == 0) {
+            throw new IllegalArgumentException("Message Recipient does not exist");  //Throw exception if recipient is not found
+        } else {
+            return messages;
+        }
     }
     public static void deleteHash(String hash) {
-        for (int i = 0; i <= sent.lastIndex; i++) {
+        for (int i = 0; i <= sent.lastIndex; i++) {       //Linear search for hash
             if(Objects.equals(sent.list[i].Hash, hash)) {
-                sent.delete(i);
+                sent.delete(i);                           //Delete message when found 
                 System.out.println("Message successfully deleted");
                 return;
             }
@@ -264,6 +285,27 @@ public class QuickChat {
                 return;
             }
         }
-        throw new IllegalArgumentException("Message hash does not exist");
+        throw new IllegalArgumentException("Message hash does not exist"); //Throwexception if message does not exist 
+    }
+    public static Message longMessage() {
+        Message longmsg = saved.list[0];
+        for (Message msg : saved.list) {                   //Linear scan for largest element at O(n) time complexity
+            if (msg != null && msg.Message.length() > longmsg.Message.length()) {
+                longmsg = msg;
+            }
+        }
+        return longmsg;
+    }
+    public static String displayRecipient(User user) {
+        String str = "";
+        for (Message msg : saved.list) {
+            if (msg != null) {
+                str = str +
+                        " \n\n Sender: " + user.CellphoneNumber +
+                        " \n Recipient: " + msg.RecipientCell +
+                        " \n Message Hash: " + msg.Hash;                        //Code split across multiple lines for readability
+            }
+        }
+        return str;
     }
 }

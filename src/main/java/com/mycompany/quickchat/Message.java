@@ -85,4 +85,7 @@ public class Message {
         System.out.println("Message ID:   " + this.ID + "\nMessage Hash:    " + this.Hash + "\nRecipient:    " + this.RecipientCell + "\nMessage:    " + this.Message);
         System.out.println("----------------------------------- \n");
     }
+    public String getMessageInfo(int i) {
+        return "Message ID:   " + this.ID + "\nMessage Hash:    " + this.Hash + "\nRecipient:    " + this.RecipientCell + "\nMessage:    " + this.Message;
+    }
 }
