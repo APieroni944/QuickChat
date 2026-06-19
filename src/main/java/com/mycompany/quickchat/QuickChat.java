@@ -113,6 +113,7 @@ public class QuickChat {
                         Message message = new Message(numMessages, cellnum, text);      //declare message
                         switch (message.SentMessage(i)) {     //call SentMessage and use return value for switch case
                             case 0: {
+                                disregarded.Append(message);
                                 break;                    //disregard message (do nothing)
                             }
                             case 1: {
